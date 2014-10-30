@@ -15,38 +15,30 @@ struct Actor: TurnSolvable {
 	var energy: Float
 	var needs: [Need]?
 	func age() -> Int {
-		// TODO
 		return Time.shared.current - birthday
 	}
-	func speed() -> Int {
-		return 1
+	func speedForTerrain(terrain: Terrain) -> Float {
+		return terrain.speedMultiplier 
 	}
 	
-	func actions() -> [Action]{
-		var action: Action? = goals.first?.requiredActions().first?
-		if action? != nil { return [action!] }
-		else { return [Action]() }
-	}
-//	func nextTurn<Actor>() -> Actor {
-//		return 
-//	}
 	func nextTurn() -> Actor {
-		println(energy)
-		return Actor(goals: goals, location: location, birthday: birthday, energy: energy - 1, needs: needs)
+		return Actor(goals: goals.map{goal in goal.nextTurn()}, 
+			location: location, 
+			birthday: birthday,
+			energy: energy - 1, 
+			needs: needs)
 	}
 }
 
-struct Goal {
+struct Goal: TurnSolvable {
 	let type: GoalType
-	let priority: Float
-	let immediacy: Float
-	let motivations: [Motivation]
-	let subgoals: [Goal]
+	let priority: Float  = 100.0
+	let immediacy: Float = 100.0
+	let motivations: [Motivation] = [Motivation]()
+	let subgoals: [Goal] = [Goal]()
 	
-	func requiredActions() -> [Action] {
-		
-		let action = Action()
-		return [action]
+	func nextTurn() -> Goal {
+		return Goal(type: type, priority: priority, immediacy: immediacy, motivations: motivations, subgoals: subgoals)
 	}
 }
 
@@ -81,6 +73,11 @@ enum Need {
 struct Location {
 	let x,y: Int
 	let z: Int?
+	let terrain: Terrain
+}
+
+struct Terrain {
+	let speedMultiplier: Float = 1
 }
 
 struct Emotion {

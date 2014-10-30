@@ -16,7 +16,6 @@ class Time {
 		}
 		return Static.instance
 	}
-	
 }
 
 struct World: TurnSolvable {
@@ -24,11 +23,12 @@ struct World: TurnSolvable {
 	
 	var environment: Environment
 	var actors: [Actor]
-	func allTurns() -> [World] {
+	
+	func turns(n: Int) -> [World] {
 		var world = World(time: 0, environment:environment, actors: actors)
 		var worlds = [world]
 		
-		for i in 1...100 {
+		for i in 1...n {
 			world = world.nextTurn()
 			worlds.append(world)
 		}
@@ -54,6 +54,7 @@ struct Environment: TurnSolvable {
 }
 
 struct Item: TurnSolvable {
+//	let name: String
 	let mass: Float = 100.0
 	func nextTurn() -> Item {
 		return Item()
