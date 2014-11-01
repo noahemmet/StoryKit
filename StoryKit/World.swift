@@ -18,22 +18,11 @@ class Time {
 	}
 }
 
-struct World: TurnSolvable {
+struct World: TurnSolvable, Equatable {
 	var time: Int = 0
 	
 	var environment: Environment
 	var actors: [Actor]
-	
-	func turns(n: Int) -> [World] {
-		var world = World(time: 0, environment:environment, actors: actors)
-		var worlds = [world]
-		
-		for i in 1...n {
-			world = world.nextTurn()
-			worlds.append(world)
-		}
-		return worlds
-	}
 	
 	func nextTurn() -> World {
 		let nextEnvironment = environment.nextTurn()
@@ -42,6 +31,22 @@ struct World: TurnSolvable {
 		return nextWorld
 	}
 	
+	func nextTurns(total: Int) -> [World] {
+		var worlds = [World]()
+		var world = self
+		for i in 1...total {
+			world = world.nextTurn()
+			worlds.append(world)
+		}
+		return worlds
+	}
+	
+	func displayString() -> String {
+		return "env: \(environment.potentialEnergy)"
+	}
+}
+func ==(lhs:World, rhs:World) -> Bool {
+	return lhs.time == rhs.time
 }
 
 struct Environment: TurnSolvable {

@@ -22,7 +22,7 @@ class StoryKitTests: XCTestCase {
 	func testStory() {
 		self.measureBlock() {
 			let actors = [Actor(goals:[Goal](),
-				location: nil, 
+				gridPoint: nil, 
 				birthday: 0, 
 				energy: 100,
 				needs: nil)]
