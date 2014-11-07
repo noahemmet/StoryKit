@@ -24,3 +24,10 @@ func delay(delay:Double, closure:()->()) {
 		),
 		dispatch_get_main_queue(), closure)
 }
+
+extension Array {
+	func randomItem() -> T {
+		let index = Int(arc4random_uniform(UInt32(self.count)))
+		return self[index]
+	}
+}

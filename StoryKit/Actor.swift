@@ -30,13 +30,10 @@ struct Actor: TurnSolvable {
 			(goal1, goal2) -> Bool in
 			return goal1.immediacy > goal2.immediacy || goal1.priority > goal2.priority
 		})
-		var actions = sortedGoals.map {
+		let actions = sortedGoals.map {
 			(var goal) -> Action? in
 			switch goal.type {
 			case let .Place(goalPoint):
-				if (self.gridPoint == goalPoint) {
-//					return Action(type: .ResolvedGoal(goal))
-				}
 				let newGoalPoint = goalPoint.moveHereFromPoint(self.gridPoint!)
 				return Action(type: .Move(newGoalPoint))
 			default:
@@ -47,7 +44,7 @@ struct Actor: TurnSolvable {
 		var newGridPoint = gridPoint
 		for action in actions {
 			if (newEnergy <= 0) { break }
-			if (action == nil)  { break }
+			if (action == nil)  { continue }
 			switch action!.type {
 			case let .Move(point):
 				newGridPoint = point
@@ -57,20 +54,15 @@ struct Actor: TurnSolvable {
 			(var goal) -> Bool in
 			switch goal.type {
 			case let .Place(goalGridPoint):
-				if self.gridPoint! == goalGridPoint {
-					return false
-				} else {
-					return true
-				}
-//				return self.gridPoint! == goalGridPoint
+				return self.gridPoint? != goalGridPoint
 			case let .Emotional(emotions):
-				return false
+				return true
 			case .Creative:
-				return false
+				return true
 			case .Financial:
-				return false
+				return true
 			case .Health:
-				return false
+				return true
 			}
 		}
 		return Actor(goals: newGoals, 

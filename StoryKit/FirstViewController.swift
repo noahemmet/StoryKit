@@ -12,46 +12,60 @@ class FirstViewController: UIViewController {
 	var worlds: [World]
 	var goalQueues: [Goal]
 	var textView: UITextView
-	var actorView: UIView
+	var actorViews: [UIView]
 	
 	required init(coder aDecoder: NSCoder) {
 		worlds = [World]()
 		goalQueues = [Goal]()
 		textView = UITextView()
-		actorView = UIView()
+		actorViews = [UIView]()
 		super.init(coder: aDecoder)
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-//		textView.frame = view.frame
-//		self.view.addSubview(textView)
-		
-		actorView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10));
-		actorView.backgroundColor = UIColor.orangeColor()
-		view.addSubview(actorView)
 	}
 	
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		let loops = 1000
+		// Remove previous
+		for view in actorViews {
+			view.removeFromSuperview()
+		}
+		actorViews.removeAll(keepCapacity: false)
+		self.worlds.removeAll(keepCapacity: false)
 		
-		PerformAsync {
-			let goal = Goal(type:GoalType.Place(GridPoint(x: 20, y: 10, z: nil)), 
+		var actors = [Actor]()
+		for i in 1...100 {
+			let gridPoint = GridPoint(x: Int(arc4random_uniform(60)), y: Int(arc4random_uniform(90)), z: nil)
+			let goal = Goal(type:GoalType.Place(GridPoint(x: Int(arc4random_uniform(60)), y: Int(arc4random_uniform(90)), z: nil)), 
 				priority: 100,
 				immediacy: 10,
 				motivations: [Motivation.EtherealVoice],
 				subgoals: [Goal]())
-			let actors = [Actor(goals:[goal],
-				gridPoint: GridPoint(x: 0, y: 0, z: nil),
+			let actor = Actor(goals:[goal],
+				gridPoint: gridPoint,
 				birthday: 0,
 				energy: 100,
-				needs: nil)]
-			let environment = Environment(potentialEnergy: 100)
-			
-			self.calculateWorld(World(time: 0, environment:environment, actors: actors))
+				needs: nil)
+			actors.append(actor)
+		}
+		
+		let environment = Environment(potentialEnergy: 100)
+		self.worlds.append(World(time: 0, environment:environment, actors: actors))
+		
+		self.actorViews = self.worlds.first!.actors.map {
+			actor in 
+			var actorView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)) 
+			actorView.backgroundColor = self.randomColor()
+			self.view.addSubview(actorView)
+			return actorView
+		}
+		
+		PerformAsync {
+			self.calculateWorld(self.worlds.first!)
 		}
 	}
 	
@@ -60,36 +74,54 @@ class FirstViewController: UIViewController {
 			self.drawWorld(world)
 		}
 		let goals = self.goalQueues
-		let actor = world.actors.first!
-		let newGoals = actor.goals + goals
 		goalQueues = [Goal]()
-		let newActor = Actor(goals:newGoals,
-			gridPoint: actor.gridPoint,
-			birthday: actor.birthday,
-			energy: actor.energy,
-			needs: actor.needs)
-		let nextWorld = (World(time: world.time, environment:world.environment, actors: [newActor])).nextTurn(world)
+		var newActors = [Actor]()
+		for actor in world.actors {
+			let newGoals = actor.goals + goals
+			let newActor = Actor(goals:newGoals,
+				gridPoint: actor.gridPoint,
+				birthday: actor.birthday,
+				energy: actor.energy,
+				needs: actor.needs)
+			newActors.append(newActor)
+		}
+		
+		let nextWorld = (World(time: world.time, environment:world.environment, actors: newActors)).nextTurn(world)
 		worlds.append(nextWorld)
-		delay(0.1) {
-			self.calculateWorld(nextWorld)
+		delay(0.01) {
+			if self.worlds.count > 0 {
+				self.calculateWorld(nextWorld)
+			}
 		}
 	}
 	
 	func drawWorld(world: World) {
-		let actor = world.actors.first?
-		actorView.center = CGPoint(x: actor!.gridPoint!.x * 10, y: actor!.gridPoint!.y * 10)
+		for var i = 0; i < world.actors.count; i++ {
+			let actor = world.actors[i]
+			let actorView = self.actorViews[i]
+			actorView.center = CGPoint(x: actor.gridPoint!.x * 10, y: actor.gridPoint!.y * 10)
+		}
 		
 	}
 	
 	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 		let point = touches.anyObject()!.locationInView(view)
 		let goal = Goal(type:GoalType.Place(GridPoint.fromCGPoint(point)),
-		priority: 120,
-		immediacy: 40,
-		motivations: [Motivation.EtherealVoice],
-		subgoals: [Goal]())
+			priority: 120,
+			immediacy: 40,
+			motivations: [Motivation.EtherealVoice],
+			subgoals: [Goal]())
 		
 		goalQueues.append(goal)
+	}
+	
+	func randomColor() -> UIColor {
+		let colors = [UIColor.orangeColor(),
+		UIColor.redColor(),
+		UIColor.blueColor(),
+		UIColor.purpleColor(),
+		UIColor.greenColor()]
+		return colors.randomItem()
 	}
 }
 
