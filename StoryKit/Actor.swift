@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Actor: TurnSolvable {
 	var goals: [Goal]
@@ -24,7 +25,7 @@ struct Actor: TurnSolvable {
 		return 100
 	}
 	
-	func nextTurn() -> Actor {
+	func nextTurn(world: World) -> Actor {
 		let sortedGoals = sorted(goals, {
 			(goal1, goal2) -> Bool in
 			return goal1.immediacy > goal2.immediacy || goal1.priority > goal2.priority
@@ -34,7 +35,7 @@ struct Actor: TurnSolvable {
 			switch goal.type {
 			case let .Place(goalPoint):
 				if (self.gridPoint == goalPoint) {
-					return Action(type: .ResolvedGoal(goal))
+//					return Action(type: .ResolvedGoal(goal))
 				}
 				let newGoalPoint = goalPoint.moveHereFromPoint(self.gridPoint!)
 				return Action(type: .Move(newGoalPoint))
@@ -48,18 +49,31 @@ struct Actor: TurnSolvable {
 			if (newEnergy <= 0) { break }
 			if (action == nil)  { break }
 			switch action!.type {
-			case let .ResolvedGoal(goal):
-				newEnergy += goal.resolutionReward()
-				
 			case let .Move(point):
 				newGridPoint = point
 			}
 		}
 		let newGoals = sortedGoals.filter {
 			(var goal) -> Bool in
-			return true
+			switch goal.type {
+			case let .Place(goalGridPoint):
+				if self.gridPoint! == goalGridPoint {
+					return false
+				} else {
+					return true
+				}
+//				return self.gridPoint! == goalGridPoint
+			case let .Emotional(emotions):
+				return false
+			case .Creative:
+				return false
+			case .Financial:
+				return false
+			case .Health:
+				return false
+			}
 		}
-		return Actor(goals: goals.map{goal in goal.nextTurn()}, 
+		return Actor(goals: newGoals, 
 			gridPoint: newGridPoint, 
 			birthday: birthday,
 			energy: energy - 1, 
@@ -67,27 +81,34 @@ struct Actor: TurnSolvable {
 	}
 }
 
-struct Goal: TurnSolvable {
+struct Goal: TurnSolvable, Hashable {
 	let type: GoalType
 	let priority: Float  = 100.0
 	let immediacy: Float = 100.0
 	let motivations: [Motivation] = [Motivation]()
 	let subgoals: [Goal] = [Goal]()
-//	var isResolved: Bool = false
+	//	var isResolved: Bool = false
 	
-	func nextTurn() -> Goal {
+	func nextTurn(world: World) -> Goal {
 		return Goal(type: type, priority: priority, immediacy: immediacy, motivations: motivations, subgoals: subgoals)
 	}
 	func resolutionReward() -> Float {
 		return 10
 	}
-//	func isResolvedForType(checkedGoalType: GoalType) -> Bool {
-//		switch checkedGoalType {
-//		case let .Place(checkedPoint):
-//			let placeType = GoalType.Place(point)
-//			return checkedPoint == self.type as GoalType.Place(point) in point
-//		}
-//	}
+	//	func isResolvedForType(checkedGoalType: GoalType) -> Bool {
+	//		switch checkedGoalType {
+	//		case let .Place(checkedPoint):
+	//			let placeType = GoalType.Place(point)
+	//			return checkedPoint == self.type as GoalType.Place(point) in point
+	//		}
+	//	}
+	var hashValue: Int { get {
+		return 3
+		}
+	}
+}
+func ==(lhs: Goal, rhs: Goal) -> Bool {
+	return lhs.hashValue == rhs.hashValue
 }
 
 enum GoalType { 
@@ -98,16 +119,24 @@ enum GoalType {
 	case Health
 }
 
-struct Action {
+struct Action: Hashable {
 	let type: ActionType
 	func requiredEnergy() -> Float{
 		return 25
 	}
+	
+	var hashValue: Int { get {
+		return 3
+		}
+	}
+}
+
+func ==(lhs: Action, rhs: Action) -> Bool {
+	return false
 }
 
 enum ActionType {
 	case Move(GridPoint)
-	case ResolvedGoal(Goal)
 }
 
 enum Motivation {
@@ -152,6 +181,9 @@ struct GridPoint: Equatable {
 			endZ?--
 		}
 		return GridPoint(x: endX, y: endY, z: endZ)
+	}
+	static func fromCGPoint (cgPoint: CGPoint) -> GridPoint {
+		return GridPoint(x: Int(cgPoint.x/10.0), y: Int(cgPoint.y/10.0), z: nil)
 	}
 }
 

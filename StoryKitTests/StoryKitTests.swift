@@ -29,7 +29,7 @@ class StoryKitTests: XCTestCase {
 			let environment = Environment(potentialEnergy: 100)
 			var world = World(time: 0, environment:environment, actors: actors)
 			for i in 1...1000 {
-				world = world.nextTurn()
+				world = world.nextTurn(world)
 			}
 		}
 	}

@@ -21,6 +21,7 @@
 		86C5126419F46DE200D965F4 /* StoryKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5126319F46DE200D965F4 /* StoryKitTests.swift */; };
 		86C5126F19F46E1000D965F4 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5126E19F46E1000D965F4 /* Story.swift */; };
 		86C5127119F46E1600D965F4 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5127019F46E1500D965F4 /* Actor.swift */; };
+		86D458EF1A05AC7F00012309 /* PlanetMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D458EE1A05AC7F00012309 /* PlanetMaker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		86C5126319F46DE200D965F4 /* StoryKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryKitTests.swift; sourceTree = "<group>"; };
 		86C5126E19F46E1000D965F4 /* Story.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		86C5127019F46E1500D965F4 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		86D458EE1A05AC7F00012309 /* PlanetMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetMaker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				86C107D41A01A7230046B346 /* World.swift */,
 				86C5127019F46E1500D965F4 /* Actor.swift */,
 				86C5126E19F46E1000D965F4 /* Story.swift */,
+				86D458EE1A05AC7F00012309 /* PlanetMaker.swift */,
 				8697E7C31A031AA800953F7F /* Helpers.swift */,
 			);
 			name = Model;
@@ -239,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86D458EF1A05AC7F00012309 /* PlanetMaker.swift in Sources */,
 				86C5125019F46DE200D965F4 /* SecondViewController.swift in Sources */,
 				8697E7C41A031AA800953F7F /* Helpers.swift in Sources */,
 				86C107D51A01A7230046B346 /* World.swift in Sources */,
