@@ -99,8 +99,10 @@ class FirstViewController: UIViewController {
 		let nextWorld = (World(time: world.time, environment:world.environment, actors: newActors)).nextTurn(world)
 		worlds.append(nextWorld)
 		delay(0.01) {
-			if self.worlds.count > 0 {
-				self.calculateWorld(nextWorld)
+			PerformAsync {
+				if self.worlds.count > 0 {
+					self.calculateWorld(nextWorld)
+				}
 			}
 		}
 	}
