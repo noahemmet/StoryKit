@@ -7,34 +7,44 @@
 //
 
 import UIKit
+import SpriteKit
 
 class FirstViewController: UIViewController {
+	var skView: SKView
+	var scene: SKScene
 	var worlds: [World]
 	var goalQueues: [Goal]
 	var textView: UITextView
-	var actorViews: [UIView]
+	var actorNodes: [SKSpriteNode]
 	
 	required init(coder aDecoder: NSCoder) {
+		skView = SKView()
+		scene = SKScene()
 		worlds = [World]()
 		goalQueues = [Goal]()
 		textView = UITextView()
-		actorViews = [UIView]()
+		actorNodes = [SKSpriteNode]()
 		super.init(coder: aDecoder)
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		scene.size = view.frame.size
+		skView.showsDrawCount = true
+		skView.showsFPS = true
+		skView.showsNodeCount = true
+		skView = SKView(frame: view.frame)
+		view.addSubview(skView)
 	}
 	
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		// Remove previous
-		for view in actorViews {
-			view.removeFromSuperview()
+		for view in actorNodes {
+			view.removeFromParent()
 		}
-		actorViews.removeAll(keepCapacity: false)
+		actorNodes.removeAll(keepCapacity: false)
 		self.worlds.removeAll(keepCapacity: false)
 		
 		var actors = [Actor]()
@@ -56,13 +66,13 @@ class FirstViewController: UIViewController {
 		let environment = Environment(potentialEnergy: 100)
 		self.worlds.append(World(time: 0, environment:environment, actors: actors))
 		
-		self.actorViews = self.worlds.first!.actors.map {
+		self.actorNodes = self.worlds.first!.actors.map {
 			actor in 
-			var actorView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)) 
-			actorView.backgroundColor = self.randomColor()
-			self.view.addSubview(actorView)
-			return actorView
+			var actorNode = SKSpriteNode(color: self.randomColor(), size: CGSize(width: 10, height: 10))
+			self.scene.addChild(actorNode)
+			return actorNode
 		}
+		skView.presentScene(scene)
 		
 		PerformAsync {
 			self.calculateWorld(self.worlds.first!)
@@ -98,8 +108,8 @@ class FirstViewController: UIViewController {
 	func drawWorld(world: World) {
 		for var i = 0; i < world.actors.count; i++ {
 			let actor = world.actors[i]
-			let actorView = self.actorViews[i]
-			actorView.center = CGPoint(x: actor.gridPoint!.x * 10, y: actor.gridPoint!.y * 10)
+			let actorNode = self.actorNodes[i]
+			actorNode.position = CGPoint(x: actor.gridPoint!.x * 10, y: actor.gridPoint!.y * 10)
 		}
 		
 	}
@@ -117,10 +127,10 @@ class FirstViewController: UIViewController {
 	
 	func randomColor() -> UIColor {
 		let colors = [UIColor.orangeColor(),
-		UIColor.redColor(),
-		UIColor.blueColor(),
-		UIColor.purpleColor(),
-		UIColor.greenColor()]
+			UIColor.redColor(),
+			UIColor.blueColor(),
+			UIColor.purpleColor(),
+			UIColor.greenColor()]
 		return colors.randomItem()
 	}
 }
