@@ -36,7 +36,7 @@ class FirstViewController: UIViewController {
 	}
 	
 	override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-		let point = touches.anyObject()!.locationInView(view)
+		let point = touches.anyObject()!.locationInView(skView)
 		let goal = Goal(type:GoalType.Place(GridPoint.fromCGPoint(point)),
 			priority: 120,
 			immediacy: 40,

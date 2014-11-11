@@ -8,6 +8,8 @@
 
 import Foundation
 
+//MARK: Runloop
+
 func PerformOnMain(work: () -> Void) {
 	CFRunLoopPerformBlock(NSRunLoop.mainRunLoop().getCFRunLoop(), kCFRunLoopCommonModes, work)
 }
@@ -24,6 +26,8 @@ func delay(delay:Double, closure:()->()) {
 		),
 		dispatch_get_main_queue(), closure)
 }
+
+//MARK: Collections
 
 extension Array {
 	func randomItem() -> T {

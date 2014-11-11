@@ -20,7 +20,7 @@ class Scene: SKScene {
 	}
 
 	required init?(coder aDecoder: NSCoder) {
-	    fatalError("init(coder:) has not been implemented")
+	    super.init(coder: aDecoder)
 	}
 	
 	override func didMoveToView(view: SKView) {
@@ -33,7 +33,7 @@ class Scene: SKScene {
 	}
 	
 	override func update(currentTime: NSTimeInterval) {
-		if let world = engine.newestWorld() {
+		if let world = engine.worlds.last {
 			drawWorld(world)
 		}
 	}
@@ -42,12 +42,11 @@ class Scene: SKScene {
 		for var i = 0; i < world.actors.count; i++ {
 			let actor = world.actors[i]
 			let actorNode = self.actorNodes[i]
-			actorNode.position = CGPoint(x: actor.gridPoint!.x * 10, y: actor.gridPoint!.y * 10)
+			actorNode.position = CGPoint(x: actor.gridPoint!.x * 10, y: Int(frame.size.height) - actor.gridPoint!.y * 10)
 		}
-		
 	}
 	
-	func randomColor() -> UIColor {
+	private func randomColor() -> UIColor {
 		let colors = [UIColor.orangeColor(),
 			UIColor.redColor(),
 			UIColor.blueColor(),

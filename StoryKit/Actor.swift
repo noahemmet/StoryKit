@@ -174,7 +174,9 @@ struct GridPoint: Equatable {
 		}
 		return GridPoint(x: endX, y: endY, z: endZ)
 	}
+	
 	static func fromCGPoint (cgPoint: CGPoint) -> GridPoint {
+		print(cgPoint)
 		return GridPoint(x: Int(cgPoint.x/10.0), y: Int(cgPoint.y/10.0), z: nil)
 	}
 }

@@ -8,14 +8,16 @@
 
 import Foundation
 
-class Engine: EngineProtocol {
+class Engine {
 	var worlds = [World]()
 	var goalQueues = [Goal]()
 	var turnDelay: Double = 0.01
 	
 	func startCalculation () -> Bool{
 		if let world = worlds.first {
-			calculateWorld(world)
+			PerformAsync {
+				self.calculateWorld(world)	
+			}
 			return true
 		} else {
 			return false
@@ -46,13 +48,4 @@ class Engine: EngineProtocol {
 			}
 		}
 	}
-	
-	//MARK: EngineProtocol
-	func newestWorld() -> World? {
-		return worlds.last
-	}
-}
-
-protocol EngineProtocol {
-	func newestWorld () -> World?
 }
