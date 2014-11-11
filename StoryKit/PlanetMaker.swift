@@ -7,3 +7,29 @@
 //
 
 import Foundation
+
+struct PlanetMaker {
+	var numInitialActors: Int
+	
+	func world () -> World {
+		var actors = [Actor]()
+		for i in 1...numInitialActors {
+			let gridPoint = GridPoint(x: Int(arc4random_uniform(60)), y: Int(arc4random_uniform(90)), z: nil)
+			let goal = Goal(type:GoalType.Place(GridPoint(x: Int(arc4random_uniform(60)), y: Int(arc4random_uniform(90)), z: nil)), 
+				priority: 100,
+				immediacy: 10,
+				motivations: [Motivation.EtherealVoice],
+				subgoals: [Goal]())
+			let actor = Actor(goals:[goal],
+				gridPoint: gridPoint,
+				birthday: 0,
+				energy: 100,
+				needs: nil)
+			actors.append(actor)
+		}
+		
+		let environment = Environment(potentialEnergy: 100)
+		let world = (World(time: 0, environment:environment, actors: actors))
+		return world
+	}
+}

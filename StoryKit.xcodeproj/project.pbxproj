@@ -22,6 +22,8 @@
 		86C5126F19F46E1000D965F4 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5126E19F46E1000D965F4 /* Story.swift */; };
 		86C5127119F46E1600D965F4 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5127019F46E1500D965F4 /* Actor.swift */; };
 		86D458EF1A05AC7F00012309 /* PlanetMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D458EE1A05AC7F00012309 /* PlanetMaker.swift */; };
+		86FE5AF41A128BA400AD5433 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE5AF31A128BA400AD5433 /* Scene.swift */; };
+		86FE5AF71A128D1700AD5433 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE5AF61A128D1700AD5433 /* Engine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		86C5126E19F46E1000D965F4 /* Story.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		86C5127019F46E1500D965F4 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		86D458EE1A05AC7F00012309 /* PlanetMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetMaker.swift; sourceTree = "<group>"; };
+		86FE5AF31A128BA400AD5433 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		86FE5AF61A128D1700AD5433 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 				86C5125119F46DE200D965F4 /* Main.storyboard */,
 				86C5125419F46DE200D965F4 /* Images.xcassets */,
 				86C5125619F46DE200D965F4 /* LaunchScreen.xib */,
+				86FE5AF51A128BA900AD5433 /* SpriteKit */,
 				86C5126D19F46DED00D965F4 /* Model */,
 				86C5124919F46DE200D965F4 /* Supporting Files */,
 			);
@@ -132,13 +137,22 @@
 		86C5126D19F46DED00D965F4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				86FE5AF61A128D1700AD5433 /* Engine.swift */,
+				86D458EE1A05AC7F00012309 /* PlanetMaker.swift */,
 				86C107D41A01A7230046B346 /* World.swift */,
 				86C5127019F46E1500D965F4 /* Actor.swift */,
 				86C5126E19F46E1000D965F4 /* Story.swift */,
-				86D458EE1A05AC7F00012309 /* PlanetMaker.swift */,
 				8697E7C31A031AA800953F7F /* Helpers.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		86FE5AF51A128BA900AD5433 /* SpriteKit */ = {
+			isa = PBXGroup;
+			children = (
+				86FE5AF31A128BA400AD5433 /* Scene.swift */,
+			);
+			name = SpriteKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +264,8 @@
 				86C5124E19F46DE200D965F4 /* FirstViewController.swift in Sources */,
 				86C5126F19F46E1000D965F4 /* Story.swift in Sources */,
 				86C5127119F46E1600D965F4 /* Actor.swift in Sources */,
+				86FE5AF41A128BA400AD5433 /* Scene.swift in Sources */,
+				86FE5AF71A128D1700AD5433 /* Engine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
