@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 struct Actor: TurnSolvable {
-	var goals: [Goal]
+	var goals = [Goal]()
 	var gridPoint: GridPoint?
 	let birthday: Int
 	var energy: Float
@@ -34,8 +34,12 @@ struct Actor: TurnSolvable {
 			(var goal) -> Action? in
 			switch goal.type {
 			case let .Place(goalPoint):
+				if let gridPoint = self.gridPoint {
 				let newGoalPoint = goalPoint.moveHereFromPoint(self.gridPoint!)
-				return Action(type: .Move(newGoalPoint))
+					return Action(type: .Move(newGoalPoint))
+				} else {
+					return nil
+				}
 			default:
 				return nil
 			}

@@ -24,6 +24,7 @@
 		86D458EF1A05AC7F00012309 /* PlanetMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D458EE1A05AC7F00012309 /* PlanetMaker.swift */; };
 		86FE5AF41A128BA400AD5433 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE5AF31A128BA400AD5433 /* Scene.swift */; };
 		86FE5AF71A128D1700AD5433 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE5AF61A128D1700AD5433 /* Engine.swift */; };
+		86FE5AF91A12DAA600AD5433 /* TurnOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE5AF81A12DAA600AD5433 /* TurnOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		86D458EE1A05AC7F00012309 /* PlanetMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetMaker.swift; sourceTree = "<group>"; };
 		86FE5AF31A128BA400AD5433 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		86FE5AF61A128D1700AD5433 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		86FE5AF81A12DAA600AD5433 /* TurnOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				86FE5AF61A128D1700AD5433 /* Engine.swift */,
+				86FE5AF81A12DAA600AD5433 /* TurnOperation.swift */,
 				86D458EE1A05AC7F00012309 /* PlanetMaker.swift */,
 				86C107D41A01A7230046B346 /* World.swift */,
 				86C5127019F46E1500D965F4 /* Actor.swift */,
@@ -264,6 +267,7 @@
 				86C5124E19F46DE200D965F4 /* FirstViewController.swift in Sources */,
 				86C5126F19F46E1000D965F4 /* Story.swift in Sources */,
 				86C5127119F46E1600D965F4 /* Actor.swift in Sources */,
+				86FE5AF91A12DAA600AD5433 /* TurnOperation.swift in Sources */,
 				86FE5AF41A128BA400AD5433 /* Scene.swift in Sources */,
 				86FE5AF71A128D1700AD5433 /* Engine.swift in Sources */,
 			);

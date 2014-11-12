@@ -25,28 +25,6 @@ struct World: TurnSolvable, Equatable {
 	var actors: [Actor]
 	
 	func nextTurn(world: World) -> World {
-		var queuedActors = [Actor]()
-//		if (queue != nil) {
-//			for aQueue in queue! {
-//				switch aQueue {
-//				case let .GoalsForActors(goals):
-//					for goal in goals.keys {
-//						let actor = goals[goal]
-//						if (actor != nil) {
-//							let newGoals = actor!.goals + [goal]
-//							queuedActors.append(Actor(goals: newGoals,
-//								gridPoint: actor!.gridPoint, 
-//								birthday: actor!.birthday,
-//								energy: actor!.energy,
-//								needs: actor!.needs))
-//						}
-//					}
-//				default: 
-//					break
-//				}
-//			}
-//		}
-		
 		let nextEnvironment = environment.nextTurn(self)
 		let nextActors = actors.map{actor in actor.nextTurn(self)}
 		

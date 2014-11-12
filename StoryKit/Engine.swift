@@ -10,13 +10,18 @@ import Foundation
 
 class Engine {
 	var worlds = [World]()
-	var goalQueues = [Goal]()
-	var turnDelay: Double = 0.01
+	var goalQueue = [Goal]()
+	var turnDelay: Double = 0.005
+	let operationQueue = NSOperationQueue()
+	
+	init() {
+		operationQueue.maxConcurrentOperationCount = 1
+	}
 	
 	func startCalculation () -> Bool{
 		if let world = worlds.first {
 			PerformAsync {
-				self.calculateWorld(world)	
+				[weak self] in self!.calculateWorld(world)
 			}
 			return true
 		} else {
@@ -25,27 +30,31 @@ class Engine {
 	}
 	
 	private func calculateWorld(world: World) {
-		let goals = self.goalQueues
-		goalQueues = [Goal]()
-		var newActors = [Actor]()
-		for actor in world.actors {
-			let newGoals = actor.goals + goals
-			let newActor = Actor(goals:newGoals,
-				gridPoint: actor.gridPoint,
-				birthday: actor.birthday,
-				energy: actor.energy,
-				needs: actor.needs)
-			newActors.append(newActor)
-		}
-		
-		let nextWorld = (World(time: world.time, environment:world.environment, actors: newActors)).nextTurn(world)
-		worlds.append(nextWorld)
-		delay(turnDelay) {
-			PerformAsync {
-				if self.worlds.count > 0 {
-					self.calculateWorld(nextWorld)
-				}
+		let operation = TurnOperation(world: world, goalQueue: goalQueue)
+		self.goalQueue.removeAll(keepCapacity: false)
+		operationQueue.addOperation(operation)
+		weak var wself = self
+		operation.completionBlock = {
+			if let nextWorld = operation.nextWorld {
+//				wself?.worlds.append(nextWorld)
+				wself?.worlds = [nextWorld]
+				wself?.calculateWorld(operation.nextWorld!)
 			}
 		}
+		delay(turnDelay) {
+			PerformAsync {
+				operation.start()
+			}
+		}
+		//		worlds.append(nextWorld)
+//		worlds = [nextWorld]
+//		delay(turnDelay) {
+//			weak var _self = self
+//			PerformAsync {
+//				if _self?.worlds.count > 0 {
+//					_self?.calculateWorld(nextWorld)
+//				}
+//			}
+//		}
 	}
 }

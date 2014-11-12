@@ -26,7 +26,7 @@ class Scene: SKScene {
 	override func didMoveToView(view: SKView) {
 		actorNodes = engine.worlds.first!.actors.map {
 			actor in 
-			var actorNode = SKSpriteNode(color: self.randomColor(), size: CGSize(width: 10, height: 10))
+			var actorNode = SKSpriteNode(color: UIColor.randomColor(), size: CGSize(width: 10, height: 10))
 			self.addChild(actorNode)
 			return actorNode
 		}
@@ -44,14 +44,5 @@ class Scene: SKScene {
 			let actorNode = self.actorNodes[i]
 			actorNode.position = CGPoint(x: actor.gridPoint!.x * 10, y: Int(frame.size.height) - actor.gridPoint!.y * 10)
 		}
-	}
-	
-	private func randomColor() -> UIColor {
-		let colors = [UIColor.orangeColor(),
-			UIColor.redColor(),
-			UIColor.blueColor(),
-			UIColor.purpleColor(),
-			UIColor.greenColor()]
-		return colors.randomItem()
 	}
 }

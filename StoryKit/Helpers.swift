@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 //MARK: Runloop
 
 func PerformOnMain(work: () -> Void) {
@@ -15,6 +15,7 @@ func PerformOnMain(work: () -> Void) {
 }
 
 func PerformAsync(work: () -> Void) {
+	dispatch_get_global_queue(0, 1)
 	dispatch_async(dispatch_get_global_queue(0, 0), work)
 }
 
@@ -33,5 +34,16 @@ extension Array {
 	func randomItem() -> T {
 		let index = Int(arc4random_uniform(UInt32(self.count)))
 		return self[index]
+	}
+}
+
+extension UIColor {
+	class func randomColor() -> UIColor{
+		let colors = [UIColor.orangeColor(),
+			UIColor.redColor(),
+			UIColor.blueColor(),
+			UIColor.purpleColor(),
+			UIColor.greenColor()]
+		return colors.randomItem()
 	}
 }
