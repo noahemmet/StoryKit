@@ -46,15 +46,5 @@ class Engine {
 				operation.start()
 			}
 		}
-		//		worlds.append(nextWorld)
-//		worlds = [nextWorld]
-//		delay(turnDelay) {
-//			weak var _self = self
-//			PerformAsync {
-//				if _self?.worlds.count > 0 {
-//					_self?.calculateWorld(nextWorld)
-//				}
-//			}
-//		}
 	}
 }

@@ -42,7 +42,9 @@ class FirstViewController: UIViewController {
 			immediacy: 40,
 			motivations: [Motivation.EtherealVoice],
 			subgoals: [Goal]())
-		scene?.engine.goalQueue.append(goal)
+//		PerformAsync {
+			self.scene?.engine.goalQueue.append(goal)
+//		}
 	}
 }
 
