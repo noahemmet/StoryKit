@@ -40,7 +40,7 @@ class FirstViewController: UIViewController {
 		let gridPoint = GridPoint.fromCGPoint(point)
 		let actors = scene?.engine.worlds.last?.nearestActorsToPoint(GridPoint.fromCGPoint(point))
 		var goalQueue = [Dictionary<Int, Goal>]()
-		for i in 0 ... 6 {
+		for i in 0 ... 2 {
 			if let actor = actors?[i] {
 			let goal = Goal(
 				type:GoalType.Place(gridPoint.randomPointWithinDistance(10)),

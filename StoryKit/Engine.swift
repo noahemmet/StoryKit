@@ -15,7 +15,7 @@ class Engine {
 	let operationQueue = NSOperationQueue()
 	
 	init() {
-//		operationQueue.maxConcurrentOperationCount = 1
+		operationQueue.maxConcurrentOperationCount = 1
 	}
 	
 	func startCalculation () -> Bool{
@@ -42,10 +42,10 @@ class Engine {
 				wself?.calculateWorld(operation.nextWorld!)
 			}
 		}
-//		delay(turnDelay) {
-//			PerformAsync {
+		delay(turnDelay) {
+			PerformAsync {
 				operation.start()
-//			}
-//		}
+			}
+		}
 	}
 }

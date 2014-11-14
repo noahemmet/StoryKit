@@ -31,24 +31,6 @@ class TurnOperation: NSOperation {
 	
 	private func calculateWorld() {
 		
-//		let nextActors = world.actors.map ({ actor in 
-//			var newGoals = actor.goals
-//			for dict in goalQueue! {
-//				if let goal = dict[actor.ID] {
-//					newGoals.append(goal)
-//				}
-//			}
-//			let newActor = Actor(
-//				ID: actor.ID,
-//				goals: newGoals,
-//				gridPoint: actor.gridPoint,
-//				birthday: actor.birthday,
-//				energy: actor.energy,
-//				needs: actor.needs)
-//			return newActor
-//		})
-		
-		
 		var newActors = [Actor]()
 		for actor in world.actors {
 			var newGoals = actor.goals
@@ -68,7 +50,7 @@ class TurnOperation: NSOperation {
 		}
 		
 		var updatedWorld = (World(time: world.time, environment:world.environment, actors: newActors))
-		let nextWorld = updatedWorld.nextTurn(updatedWorld)
+		nextWorld = updatedWorld.nextTurn(updatedWorld)
 		
 		if completionBlock != nil{
 			PerformAsync {
