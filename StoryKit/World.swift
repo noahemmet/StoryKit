@@ -41,6 +41,9 @@ struct World: TurnSolvable, Equatable {
 		}
 		return worlds
 	}
+	func nearestActorsToPoint(point: GridPoint) -> [Actor] {
+		return [actors[0], actors[1], actors[2]]
+	}
 	
 	func displayString() -> String {
 		return "env: \(environment.potentialEnergy)"

@@ -68,7 +68,7 @@ class TurnOperation: NSOperation {
 		}
 		
 		var updatedWorld = (World(time: world.time, environment:world.environment, actors: newActors))
-		let nextWorld = updatedWorld.nextTurn(&updatedWorld)
+		let nextWorld = updatedWorld.nextTurn(updatedWorld)
 		
 		if completionBlock != nil{
 			PerformAsync {
