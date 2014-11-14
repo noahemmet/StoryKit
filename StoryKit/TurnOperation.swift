@@ -10,31 +10,56 @@ import Foundation
 
 class TurnOperation: NSOperation {
 	let world: World
-	let goalQueue: [Goal]?
+	let goalQueue: [Dictionary<Int, Goal>]? // Actor.ID
 	var nextWorld: World?
 	var asyncronous: Bool {
 		get { return true }
 	}
+//	override var finished: Bool {
+//		get { return true }
+//	}
 	
-	init(world:World, goalQueue: [Goal]?) {
+	init(world:World, goalQueue: [Dictionary<Int, Goal>]?) {
 		self.world = world
 		self.goalQueue = goalQueue
 		super.init()
 	}
 	
 	override func start() {
-		calculateWorld(world)
+		calculateWorld()
 	}
 	
-	private func calculateWorld(world: World) {
+	private func calculateWorld() {
+		
+//		let nextActors = world.actors.map ({ actor in 
+//			var newGoals = actor.goals
+//			for dict in goalQueue! {
+//				if let goal = dict[actor.ID] {
+//					newGoals.append(goal)
+//				}
+//			}
+//			let newActor = Actor(
+//				ID: actor.ID,
+//				goals: newGoals,
+//				gridPoint: actor.gridPoint,
+//				birthday: actor.birthday,
+//				energy: actor.energy,
+//				needs: actor.needs)
+//			return newActor
+//		})
+		
+		
 		var newActors = [Actor]()
 		for actor in world.actors {
 			var newGoals = actor.goals
-			if (self.goalQueue != nil) {
-				newGoals += self.goalQueue!
+			for dict in goalQueue! {
+				if let goal = dict[actor.ID] {
+					newGoals.append(goal)
+				}
 			}
 			let newActor = Actor(
-				goals:newGoals,
+				ID: actor.ID,
+				goals: newGoals,
 				gridPoint: actor.gridPoint,
 				birthday: actor.birthday,
 				energy: actor.energy,
@@ -42,10 +67,13 @@ class TurnOperation: NSOperation {
 			newActors.append(newActor)
 		}
 		
-		nextWorld = (World(time: world.time, environment:world.environment, actors: newActors)).nextTurn(world)
+		var updatedWorld = (World(time: world.time, environment:world.environment, actors: newActors))
+		let nextWorld = updatedWorld.nextTurn(&updatedWorld)
 		
 		if completionBlock != nil{
-			completionBlock!()
+			PerformAsync {
+				self.completionBlock!()
+			}
 		}
 	}
 }

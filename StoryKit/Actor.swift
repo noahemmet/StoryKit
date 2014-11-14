@@ -10,11 +10,12 @@ import Foundation
 import UIKit
 
 struct Actor: TurnSolvable {
+	let ID: Int
 	var goals = [Goal]()
-	var gridPoint: GridPoint?
+	var gridPoint: GridPoint
 	let birthday: Int
 	var energy: Float
-	var needs: [Need]?
+	var needs: [Need]
 	func age() -> Int {
 		return Time.shared.current - birthday
 	}
@@ -23,6 +24,12 @@ struct Actor: TurnSolvable {
 	}
 	func energyAfterRest () -> Float {
 		return 100
+	}
+	
+	func goalsForID() -> [Dictionary<Int, Goal>]{
+		return self.goals.map { goal in 
+			return [self.ID: goal]
+		}
 	}
 	
 	func nextTurn(world: World) -> Actor {
@@ -34,12 +41,9 @@ struct Actor: TurnSolvable {
 			(var goal) -> Action? in
 			switch goal.type {
 			case let .Place(goalPoint):
-				if let gridPoint = self.gridPoint {
-				let newGoalPoint = goalPoint.moveHereFromPoint(self.gridPoint!)
-					return Action(type: .Move(newGoalPoint))
-				} else {
-					return nil
-				}
+				let newGoalPoint = goalPoint.moveHereFromPoint(self.gridPoint)
+				return Action(type: .Move(newGoalPoint))
+				
 			default:
 				return nil
 			}
@@ -58,7 +62,7 @@ struct Actor: TurnSolvable {
 			(var goal) -> Bool in
 			switch goal.type {
 			case let .Place(goalGridPoint):
-				return self.gridPoint? != goalGridPoint
+				return self.gridPoint != goalGridPoint
 			case let .Emotional(emotions):
 				return true
 			case .Creative:
@@ -69,7 +73,9 @@ struct Actor: TurnSolvable {
 				return true
 			}
 		}
-		return Actor(goals: newGoals, 
+		return Actor(
+			ID: ID,
+			goals: newGoals, 
 			gridPoint: newGridPoint, 
 			birthday: birthday,
 			energy: energy - 1, 
@@ -99,8 +105,8 @@ struct Goal: TurnSolvable, Hashable {
 	//		}
 	//	}
 	var hashValue: Int { get {
-		return 3
-		}
+		return -1
+	}
 	}
 }
 func ==(lhs: Goal, rhs: Goal) -> Bool {
@@ -182,6 +188,22 @@ struct GridPoint: Equatable {
 	static func fromCGPoint (cgPoint: CGPoint) -> GridPoint {
 		print(cgPoint)
 		return GridPoint(x: Int(cgPoint.x/10.0), y: Int(cgPoint.y/10.0), z: nil)
+	}
+	
+	func distanceFromGridPoint(point: GridPoint) -> Int {
+		let distance = abs(point.x - self.x) + abs(point.y - self.y)
+		return distance
+	}
+	
+	func randomPointWithinDistance(distance: UInt) -> GridPoint {
+		if distance == 0 { return self }
+		var signX = Int(arc4random_uniform(2) == 1 ? 1 : -1) as Int
+		var signY = Int(arc4random_uniform(2) == 1 ? 1 : -1)
+		let randomXDistance = arc4random_uniform(UInt32(distance))
+		let randomYDistance = arc4random_uniform(UInt32(distance))
+		let newX = x - (Int(randomXDistance) * signX)
+		let newY = y - (Int(randomYDistance) * signY)
+		return GridPoint(x: newX, y: newY, z: z)
 	}
 }
 

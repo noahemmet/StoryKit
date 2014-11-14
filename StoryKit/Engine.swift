@@ -10,18 +10,19 @@ import Foundation
 
 class Engine {
 	var worlds = [World]()
-	var goalQueue = [Goal]()
+	var goalQueue = [Dictionary<Int,Goal>]()
 	var turnDelay: Double = 0.005
 	let operationQueue = NSOperationQueue()
 	
 	init() {
-		operationQueue.maxConcurrentOperationCount = 1
+//		operationQueue.maxConcurrentOperationCount = 1
 	}
 	
 	func startCalculation () -> Bool{
 		if let world = worlds.first {
 			PerformAsync {
-				[weak self] in self!.calculateWorld(world)
+				[weak self] in self!.calculateWorld(world)			
+//			self.calculateWorld(world)
 			}
 			return true
 		} else {
@@ -31,20 +32,20 @@ class Engine {
 	
 	private func calculateWorld(world: World) {
 		let operation = TurnOperation(world: world, goalQueue: goalQueue)
-		self.goalQueue.removeAll(keepCapacity: false)
+		goalQueue.removeAll(keepCapacity: false)
 		operationQueue.addOperation(operation)
 		weak var wself = self
 		operation.completionBlock = {
 			if let nextWorld = operation.nextWorld {
-//				wself?.worlds.append(nextWorld)
-				wself?.worlds = [nextWorld]
+				wself?.worlds.append(nextWorld)
+//				wself?.worlds = [nextWorld]
 				wself?.calculateWorld(operation.nextWorld!)
 			}
 		}
-		delay(turnDelay) {
-			PerformAsync {
+//		delay(turnDelay) {
+//			PerformAsync {
 				operation.start()
-			}
-		}
+//			}
+//		}
 	}
 }

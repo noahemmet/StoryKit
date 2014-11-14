@@ -10,8 +10,8 @@ import SpriteKit
 
 class Scene: SKScene {
 	var engine: Engine = Engine()
-	
 	var actorNodes: [SKSpriteNode] = [SKSpriteNode]()
+	
 	override init(size: CGSize) {
 		let planetMaker = PlanetMaker(numInitialActors: 100)
 		engine.worlds.append(planetMaker.world())
@@ -42,7 +42,7 @@ class Scene: SKScene {
 		for var i = 0; i < world.actors.count; i++ {
 			let actor = world.actors[i]
 			let actorNode = self.actorNodes[i]
-			actorNode.position = CGPoint(x: actor.gridPoint!.x * 10, y: Int(frame.size.height) - actor.gridPoint!.y * 10)
+			actorNode.position = CGPoint(x: actor.gridPoint.x * 10, y: Int(frame.size.height) - actor.gridPoint.y * 10)
 		}
 	}
 }

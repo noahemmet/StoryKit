@@ -20,11 +20,13 @@ struct PlanetMaker {
 				immediacy: 10,
 				motivations: [Motivation.EtherealVoice],
 				subgoals: [Goal]())
-			let actor = Actor(goals:[goal],
+			let actor = Actor(
+				ID: i,
+				goals:[goal],
 				gridPoint: gridPoint,
 				birthday: 0,
 				energy: 100,
-				needs: nil)
+				needs: [Need]())
 			actors.append(actor)
 		}
 		

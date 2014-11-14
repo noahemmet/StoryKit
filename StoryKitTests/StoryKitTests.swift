@@ -21,16 +21,17 @@ class StoryKitTests: XCTestCase {
 	
 	func testStory() {
 		self.measureBlock() {
-			let actors = [Actor(goals:[Goal](),
-				gridPoint: nil, 
-				birthday: 0, 
-				energy: 100,
-				needs: nil)]
-			let environment = Environment(potentialEnergy: 100)
-			var world = World(time: 0, environment:environment, actors: actors)
-			for i in 1...1000 {
-				world = world.nextTurn(world)
-			}
+			
+//			let actors = [Actor(goals:[Goal](),
+//				gridPoint: GridPoint(x: 0, y: 0, z: nil), 
+//				birthday: 0, 
+//				energy: 100,
+//				needs: nil)]
+//			let environment = Environment(potentialEnergy: 100)
+//			var world = World(time: 0, environment:environment, actors: actors)
+//			for i in 1...1000 {
+//				world = world.nextTurn(world)
+//			}
 		}
 	}
 }
