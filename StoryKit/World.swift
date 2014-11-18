@@ -24,9 +24,9 @@ struct World: TurnSolvable, Equatable {
 	var environment: Environment
 	var actors: [Actor]
 	
-	func nextTurn(world: World) -> World {
-		let nextEnvironment = environment.nextTurn(self)
-		let nextActors = actors.map{actor in actor.nextTurn(self)}
+	func nextTurn(inout world: World) -> World {
+		let nextEnvironment = environment.nextTurn(&world)
+		let nextActors = actors.map{actor in actor.nextTurn(&world)}
 		
 		let nextWorld = World(time: time+1, environment: nextEnvironment, actors: nextActors)
 		return nextWorld
@@ -36,7 +36,7 @@ struct World: TurnSolvable, Equatable {
 		var worlds = [World]()
 		var world = self
 		for i in 1...total {
-			world = world.nextTurn(world)
+			world = world.nextTurn(&world)
 			worlds.append(world)
 		}
 		return worlds
@@ -57,7 +57,7 @@ func ==(lhs:World, rhs:World) -> Bool {
 struct Environment: TurnSolvable {
 	var potentialEnergy = 100
 	
-	func nextTurn(world: World) -> Environment {
+	func nextTurn(inout world: World) -> Environment {
 		let environment = Environment()
 		return environment
 	}
@@ -66,7 +66,7 @@ struct Environment: TurnSolvable {
 struct Item: TurnSolvable {
 	//	let name: String
 	let mass: Float = 100.0
-	func nextTurn(world: World) -> Item {
+	func nextTurn(inout world: World) -> Item {
 		return Item()
 	}
 	
@@ -78,5 +78,5 @@ enum Queue {
 }
 
 protocol TurnSolvable {
-	func nextTurn<Self>(world: World) -> Self
+	func nextTurn<Self>(inout world: World) -> Self
 }

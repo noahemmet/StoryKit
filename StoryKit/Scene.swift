@@ -9,17 +9,19 @@
 import SpriteKit
 
 class Scene: SKScene {
-	var engine: Engine = Engine()
+	var engine: Engine 
 	var actorNodes: [SKSpriteNode] = [SKSpriteNode]()
 	
 	override init(size: CGSize) {
 		let planetMaker = PlanetMaker(numInitialActors: 100)
-		engine.worlds.append(planetMaker.world())
+		engine = Engine(initialWorld: planetMaker.world())
 		engine.startCalculation()
 		super.init(size: size)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
+		let planetMaker = PlanetMaker(numInitialActors: 100)
+		engine = Engine(initialWorld: planetMaker.world())
 	    super.init(coder: aDecoder)
 	}
 	

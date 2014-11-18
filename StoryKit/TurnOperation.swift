@@ -10,18 +10,19 @@ import Foundation
 
 class TurnOperation: NSOperation {
 	let world: World
-	let goalQueue: [Dictionary<Int, Goal>]? // Actor.ID
+	let eventQueue: [Event]?
 	var nextWorld: World?
 	var asyncronous: Bool {
 		get { return true }
 	}
+//	var isFinished = false
 //	override var finished: Bool {
-//		get { return true }
+//		get { return isFinished }
 //	}
 	
-	init(world:World, goalQueue: [Dictionary<Int, Goal>]?) {
+	init(world:World, eventQueue: [Event]?) {
 		self.world = world
-		self.goalQueue = goalQueue
+		self.eventQueue = eventQueue
 		super.init()
 	}
 	
@@ -30,14 +31,11 @@ class TurnOperation: NSOperation {
 	}
 	
 	private func calculateWorld() {
-		
 		var newActors = [Actor]()
 		for actor in world.actors {
 			var newGoals = actor.goals
-			for dict in goalQueue! {
-				if let goal = dict[actor.ID] {
-					newGoals.append(goal)
-				}
+			for event in eventQueue! {
+
 			}
 			let newActor = Actor(
 				ID: actor.ID,
@@ -50,12 +48,12 @@ class TurnOperation: NSOperation {
 		}
 		
 		var updatedWorld = (World(time: world.time, environment:world.environment, actors: newActors))
-		nextWorld = updatedWorld.nextTurn(updatedWorld)
-		
+		nextWorld = updatedWorld.nextTurn(&updatedWorld)
+//		isFinished = true
 		if completionBlock != nil{
-			PerformAsync {
+//			PerformAsync {
 				self.completionBlock!()
 			}
-		}
+//		}
 	}
 }

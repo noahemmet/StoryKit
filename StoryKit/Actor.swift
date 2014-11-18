@@ -32,7 +32,7 @@ struct Actor: TurnSolvable {
 		}
 	}
 	
-	func nextTurn(world: World) -> Actor {
+	func nextTurn(inout world: World) -> Actor {
 		let sortedGoals = sorted(goals, {
 			(goal1, goal2) -> Bool in
 			return goal1.immediacy > goal2.immediacy || goal1.priority > goal2.priority
@@ -91,7 +91,7 @@ struct Goal: TurnSolvable, Hashable {
 	let subgoals: [Goal] = [Goal]()
 	//	var isResolved: Bool = false
 	
-	func nextTurn(world: World) -> Goal {
+	func nextTurn(inout world: World) -> Goal {
 		return Goal(type: type, priority: priority, immediacy: immediacy, motivations: motivations, subgoals: subgoals)
 	}
 	func resolutionReward() -> Float {

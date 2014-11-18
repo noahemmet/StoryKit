@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8697E7C41A031AA800953F7F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8697E7C31A031AA800953F7F /* Helpers.swift */; };
+		86B4C4681A16C4FB00A8201E /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B4C4671A16C4FA00A8201E /* Timeline.swift */; };
+		86B4C46A1A16C5C600A8201E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B4C4691A16C5C600A8201E /* Event.swift */; };
 		86C107D51A01A7230046B346 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C107D41A01A7230046B346 /* World.swift */; };
 		86C107D61A01A7F20046B346 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C107D41A01A7230046B346 /* World.swift */; };
 		86C364EB19F474D20099BBB2 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C5126E19F46E1000D965F4 /* Story.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		8697E7C31A031AA800953F7F /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		86B4C4671A16C4FA00A8201E /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
+		86B4C4691A16C5C600A8201E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		86C107D41A01A7230046B346 /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		86C5124619F46DE200D965F4 /* StoryKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C5124A19F46DE200D965F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				86FE5AF61A128D1700AD5433 /* Engine.swift */,
+				86B4C4671A16C4FA00A8201E /* Timeline.swift */,
+				86B4C4691A16C5C600A8201E /* Event.swift */,
 				86FE5AF81A12DAA600AD5433 /* TurnOperation.swift */,
 				86D458EE1A05AC7F00012309 /* PlanetMaker.swift */,
 				86C107D41A01A7230046B346 /* World.swift */,
@@ -259,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86B4C4681A16C4FB00A8201E /* Timeline.swift in Sources */,
 				86D458EF1A05AC7F00012309 /* PlanetMaker.swift in Sources */,
 				86C5125019F46DE200D965F4 /* SecondViewController.swift in Sources */,
 				8697E7C41A031AA800953F7F /* Helpers.swift in Sources */,
@@ -270,6 +277,7 @@
 				86FE5AF91A12DAA600AD5433 /* TurnOperation.swift in Sources */,
 				86FE5AF41A128BA400AD5433 /* Scene.swift in Sources */,
 				86FE5AF71A128D1700AD5433 /* Engine.swift in Sources */,
+				86B4C46A1A16C5C600A8201E /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

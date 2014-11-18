@@ -39,22 +39,23 @@ class FirstViewController: UIViewController {
 		let point = touches.anyObject()!.locationInView(skView)
 		let gridPoint = GridPoint.fromCGPoint(point)
 		let actors = scene?.engine.worlds.last?.nearestActorsToPoint(GridPoint.fromCGPoint(point))
-		var goalQueue = [Dictionary<Int, Goal>]()
+		var eventQueue = [Event]()
 		for i in 0 ... 2 {
 			if let actor = actors?[i] {
-			let goal = Goal(
-				type:GoalType.Place(gridPoint.randomPointWithinDistance(10)),
-				priority: 120,
-				immediacy: 40,
-				motivations: [Motivation.EtherealVoice],
-				subgoals: [Goal]())
+				let event = Event(type: .PlayerTouch(point: gridPoint))
+				let goal = Goal(
+					type:GoalType.Place(gridPoint.randomPointWithinDistance(10)),
+					priority: 120,
+					immediacy: 40,
+					motivations: [Motivation.EtherealVoice],
+					subgoals: [Goal]())
 				
-				goalQueue.append([actor.ID: goal])
+				eventQueue.append(event)
 			}
 		}
 		
 //		PerformAsync {
-			self.scene?.engine.goalQueue += goalQueue
+			self.scene?.engine.eventQueue += eventQueue
 //		}
 	}
 }
